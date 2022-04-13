@@ -11,8 +11,6 @@ import (
 	"time"
 )
 
-// TODO : implement the actual compression, uncompressed works until 4096 bytes
-
 type CompressedConn struct {
 	tcpConn net.Conn
 	buffer  *bytes.Buffer
