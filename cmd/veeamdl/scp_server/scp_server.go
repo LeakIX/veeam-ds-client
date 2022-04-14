@@ -12,6 +12,7 @@ import (
 
 func StartScpServer() {
 	ssh.Handle(func(s ssh.Session) {
+		defer s.Close()
 		log.Println("Received remoted connection")
 		if len(s.Command()) < 1 || s.Command()[0] != "scp" || s.Subsystem() != "" {
 			s.Close()
@@ -50,6 +51,14 @@ func StartScpServer() {
 			return
 		}
 		s.Write([]byte{0x00})
+		// Discard remaining commands from SCP
+		for {
+			_, err := bufreader.ReadString('\n')
+			if err != nil {
+				break
+			}
+			s.Write([]byte{0x00})
+		}
 	})
 	log.Fatal(ssh.ListenAndServe(":2222", nil))
 }
