@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/LeakIX/veeam-ds-client/v11"
 	"log"
 	"os"
@@ -8,6 +9,7 @@ import (
 )
 
 func main() {
+	fmt.Println("from lkx for UA support")
 	if len(os.Args) < 4 {
 		log.Fatalln("./veeamcp <target> <source-filename> <target-filename>")
 	}
@@ -21,7 +23,7 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	log.Println("Prepared file for download, requesting file")
+	log.Println("Prepared file for copy, copying...")
 	err = v11.VeeamCopy(target, sourceFile, targetFile)
 
 	if err != nil {
